@@ -105,9 +105,10 @@ export async function app(): Promise<express.Express> {
 }
 
 async function run(): Promise<void> {
-  const port = process.env['PORT'] || 4000;
+  const port = Number(process.env['PORT']) || 4000;
   const server = await app();
-  server.listen(port, () => {
+
+  server.listen(port, '0.0.0.0', () => {
     console.log(`✅ Angular SSR multilingua avviato su http://localhost:${port}`);
   });
 }

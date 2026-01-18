@@ -20,15 +20,18 @@ export class ContattiComponent {
     private contactsService: ContactsService
   ) {
     this.form = this.fb.group({
-      nome: ['', Validators.required],
+      nome: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      cellulare: [''],
-      messaggio: ['', Validators.required]
+      cellulare: ['', [Validators.required]],
+      messaggio: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
 
   submit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched(); // 🔴 fa comparire gli errori
+      return;
+    }
 
     this.loading = true;
     this.error = '';

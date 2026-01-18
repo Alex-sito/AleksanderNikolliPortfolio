@@ -1,20 +1,80 @@
 
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form [formGroup]="form" (ngSubmit)="submit()" class="contact-form">
 
-  <input type="text" placeholder="Nome" formControlName="nome">
+  <!-- NOME -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="nome" />
 
-  <input type="email" placeholder="Email" formControlName="email">
+    <mat-error *ngIf="form.get('nome')?.hasError('required')">
+      Il nome è obbligatorio
+    </mat-error>
 
-  <input type="text" placeholder="Cellulare" formControlName="cellulare">
+    <mat-error *ngIf="form.get('nome')?.hasError('minlength')">
+      Il nome deve contenere almeno 2 caratteri
+    </mat-error>
+  </mat-form-field>
 
-  <textarea placeholder="Messaggio" formControlName="messaggio"></textarea>
+  <!-- EMAIL -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="email" />
 
-  <button type="submit" [disabled]="loading">
+    <mat-error *ngIf="form.get('email')?.hasError('required')">
+      L’email è obbligatoria
+    </mat-error>
+
+    <mat-error *ngIf="form.get('email')?.hasError('email')">
+      Inserisci un’email valida
+    </mat-error>
+  </mat-form-field>
+
+  <!-- CELLULARE -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Cellulare</mat-label>
+    <input matInput formControlName="cellulare" />
+
+    <mat-error *ngIf="form.get('cellulare')?.hasError('required')">
+      Il cellulare è obbligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <!-- MESSAGGIO -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Messaggio</mat-label>
+    <textarea
+      matInput
+      rows="5"
+      formControlName="messaggio">
+    </textarea>
+
+    <mat-error *ngIf="form.get('messaggio')?.hasError('required')">
+      Il messaggio è obbligatorio
+    </mat-error>
+
+    <mat-error *ngIf="form.get('messaggio')?.hasError('minlength')">
+      Il messaggio deve contenere almeno 10 caratteri
+    </mat-error>
+  </mat-form-field>
+
+  <!-- BOTTONE -->
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="loading"
+    class="submit-btn">
     {{ loading ? 'Invio...' : 'Invia messaggio' }}
   </button>
 
-  <p *ngIf="success" class="success">Messaggio inviato ✔</p>
-  <p *ngIf="error" class="error">{{ error }}</p>
+  <!-- FEEDBACK -->
+  <p *ngIf="success" class="success">
+    Messaggio inviato correttamente ✔
+  </p>
+
+  <p *ngIf="error" class="error">
+    {{ error }}
+  </p>
 
 </form>
 
