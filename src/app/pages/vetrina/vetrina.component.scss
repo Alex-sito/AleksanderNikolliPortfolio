@@ -1,0 +1,124 @@
+
+@use '../../../styles/theme/theme' as *;
+
+/* =====================================================
+   SEZIONE VETRINA
+===================================================== */
+.vetrina-section {
+  padding: space(7) space(6);
+  color: color(text);
+}
+
+/* CONTENITORE CENTRALE */
+.vetrina-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* =====================================================
+   TITOLI
+===================================================== */
+.section-title {
+  font-family: $font-family-heading;
+  font-size: 2.3rem;
+  color: color(accent);
+  margin-bottom: space(4);
+  text-shadow: 0 0 12px rgba(color(accent), 0.5);
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  max-width: 700px;
+
+  /* 🔥 CENTRATURA REALE */
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: space(6);
+
+  padding-left: 0;
+  padding-right: 0;
+
+  color: color(text-light);
+  line-height: 1.6;
+  text-align: center;
+}
+/* =====================================================
+   GRID SOFTWARE
+===================================================== */
+.software-grid {
+  display: grid;
+  gap: space(6);
+  justify-items: center;
+}
+
+/* DEFAULT → più software */
+.software-grid:not(.single) {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* SOLO UN SOFTWARE → SEMPRE CENTRALE */
+.software-grid.single {
+  grid-template-columns: 1fr;
+  justify-content: center;
+}
+
+/* =====================================================
+   COMING SOON
+===================================================== */
+.coming-soon {
+  margin-top: space(6);
+  font-size: 0.95rem;
+  color: color(text-light);
+  opacity: 0.75;
+  text-align: center;
+}
+
+/* =====================================================
+   RESPONSIVE (SOLO SPAZI E FONT, MAI GRID!)
+===================================================== */
+
+/* XL */
+@include up(xl) {
+  .vetrina-inner {
+    max-width: 1400px;
+  }
+}
+
+/* MD */
+@media (max-width: bp(md)) {
+  .vetrina-section {
+    padding: space(6) space(4);
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+/* SM */
+@media (max-width: bp(sm)) {
+  .section-title {
+    font-size: 1.7rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* XS */
+@media (max-width: bp(xs)) {
+  .vetrina-section {
+    padding: space(5) space(3);
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .coming-soon {
+    font-size: 0.85rem;
+  }
+}
+

@@ -1,0 +1,166 @@
+
+<form
+  class="pricing-form"
+  [formGroup]="form"
+  (ngSubmit)="calculate()"
+>
+
+  <!-- =====================
+       CAMPI DINAMICI
+  ====================== -->
+  <ng-container *ngFor="let key of optionKeys">
+
+    <div class="form-group">
+
+      <!-- LABEL + DETTAGLI -->
+      <div class="label-row">
+        <label i18n>{{ pricingInfo[key].title }}</label>
+
+        <button
+          type="button"
+          class="info-btn"
+          (click)="toggleInfo(key)"
+          i18n
+        >
+          ⓘ Dettagli
+        </button>
+      </div>
+
+      <!-- INPUT -->
+      <ng-container [ngSwitch]="key">
+
+        <!-- NUMERO PAGINE -->
+        <input
+          *ngSwitchCase="'pages'"
+          type="number"
+          min="1"
+          formControlName="pages"
+        />
+
+        <!-- LINGUE -->
+        <input
+          *ngSwitchCase="'languages'"
+          type="number"
+          min="1"
+          formControlName="languages"
+        />
+
+        <!-- SELECT GENERICO -->
+        <select
+          *ngSwitchDefault
+          [formControlName]="key"
+        >
+          <option
+            *ngFor="let opt of selectOptions[key]"
+            [value]="opt.value"
+          >
+            {{ opt.label }}
+          </option>
+        </select>
+
+      </ng-container>
+
+      <!-- DETTAGLI COLLASSABILI -->
+      <div
+        class="info-box"
+        *ngIf="openedInfo === key"
+      >
+        <p>{{ pricingInfo[key].description }}</p>
+
+        <ul *ngIf="pricingInfo[key].notes">
+          <li *ngFor="let note of pricingInfo[key].notes">
+            {{ note }}
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+  <!-- SUBMIT -->
+  <button
+    type="submit"
+    class="submit-btn"
+    [disabled]="loading || form.invalid"
+    i18n
+  >
+    {{ loading ? 'Calcolo in corso…' : 'Calcola preventivo' }}
+  </button>
+
+</form>
+
+<!-- =====================
+     PREVIEW LIVE
+====================== -->
+<section
+  class="live-preview"
+  *ngIf="previewTotal !== null"
+>
+  <strong i18n>Stima attuale:</strong>
+  €{{ previewTotal }}
+</section>
+
+<!-- =====================
+     RISULTATO
+====================== -->
+<section *ngIf="result" class="pricing-result">
+
+  <!-- 🔥 SCONTO -->
+  <div
+    *ngIf="result.discountRate > 0"
+    class="discount-banner"
+  >
+    🔥 -{{ result.discountRate * 100 }}%
+    <span>
+      <span i18n>Valido fino al</span>
+      {{ result.validUntil | date:'dd/MM/yyyy' }}
+    </span>
+    <strong>⏳ {{ countdownText }}</strong>
+  </div>
+
+  <h2 i18n>
+    Totale scontato: €{{ result.discountedTotal }}
+  </h2>
+
+  <p
+    *ngIf="result.discountRate > 0"
+    class="old-price"
+  >
+    <span i18n>Prezzo originale:</span>
+    €{{ result.total }}
+  </p>
+
+  <!-- =====================
+      RIEPILOGO VOCI
+  ====================== -->
+  <div class="summary-box">
+
+    <h3 i18n>Riepilogo del preventivo</h3>
+
+      <ul class="summary-list">
+        <li *ngFor="let key of optionKeys">
+          <span class="label">
+            {{ pricingInfo[key].title }}
+          </span>
+          <span class="value">
+            €{{ result.breakdown[key] || 0 }}
+          </span>
+        </li>
+      </ul>
+
+
+  </div>
+
+
+  <button
+    type="button"
+    class="whatsapp-btn discount"
+    (click)="openWhatsapp()"
+    i18n
+  >
+    💬 Richiedi ora su WhatsApp
+  </button>
+
+</section>
+

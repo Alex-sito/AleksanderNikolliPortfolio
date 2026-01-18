@@ -1,0 +1,57 @@
+
+<!-- src/app/shared/components/footer/footer.component.html -->
+<footer #footerRef class="footer-container">
+  <!-- NUOVO: Badge di verifica di Google posizionato all'inizio e al centro del footer -->
+  <app-google-verified-badge
+    [isVerified]="true"
+    [googleProfileUrl]="'https://g.co/kgs/H1dR6qk'"
+    class="footer-google-badge">
+  </app-google-verified-badge>
+  <!-- Puoi impostare isVerified="true" quando la tua attività GMB è verificata -->
+
+  <div class="footer-socials">
+
+      <app-social-icons
+        [github]="githubUrl"
+        [linkedin]="linkedinUrl"
+        [instagram]="instagramUrl"
+        [facebook]="facebookUrl"
+        [whatsapp]="whatsappLink"
+        [email]="emailAddress"
+        [phone]="phoneNumber">
+      </app-social-icons>
+      
+  </div>
+
+  <div class="footer-separator"></div>
+
+  <div class="footer-bottom-bar">
+    <div class="footer-copyright">
+      <span i18n="@@footerCopyright">&copy; {{ currentYear }} Aleksander Nikolli</span>
+    </div>
+    <div class="footer-tech-stack">
+      <span class="built-with-text" i18n="@@footerBuiltWith">Built with:</span>
+      <div class="tech-item">
+        <mat-icon class="tech-icon">code</mat-icon>
+        <span class="tech-name">Angular</span>
+      </div>
+      <div class="tech-item">
+        <mat-icon class="tech-icon">storage</mat-icon>
+        <span class="tech-name">Node.js</span>
+      </div>
+      <div class="tech-item">
+        <mat-icon class="tech-icon">data_object</mat-icon>
+        <span class="tech-name">MongoDB</span>
+      </div>
+      <div class="tech-item">
+        <mat-icon class="tech-icon">speed</mat-icon>
+        <span class="tech-name">Express</span>
+      </div>
+      <div class="tech-item">
+        <mat-icon class="tech-icon">dns</mat-icon>
+        <span class="tech-name">MySQL</span>
+      </div>
+    </div>
+  </div>
+</footer>
+

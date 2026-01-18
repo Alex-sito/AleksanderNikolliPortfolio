@@ -1,0 +1,154 @@
+
+/* src/app/app.component.scss */
+
+@use '../styles/theme/theme' as *;
+
+:host {
+  background: transparent !important;
+}
+
+/* === Layout principale === */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: z(app); /* sopra il background */
+}
+
+/* === Contenuto principale === */
+.main-content {
+  flex: 1;
+  padding: space(6);
+  color: color(text);
+  position: relative;
+  z-index: z(app); /* evita che il testo venga coperto dal background */
+  font-family: $font-family-base;
+}
+
+/* ===============================================================
+ * Pulsante "Scroll to Top"
+ * =============================================================== */
+.scroll-to-top-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: z(scroll-top);
+
+  opacity: 0;
+  transform: translateY(100px);
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out,
+    bottom 0.3s ease-out;
+
+  /* Colori theme */
+  background-color: color(accent);
+  border: 1px solid rgba(color(accent), 0.6);
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(color(accent), 0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Quando visibile */
+.scroll-to-top-button.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover (effetto glow tech) */
+.scroll-to-top-button:hover {
+  background-color: darken(color(accent), 10%);
+  box-shadow: 0 8px 20px rgba(color(accent), 0.6);
+  transform: translateY(-2px);
+}
+
+/* Icona interna */
+.scroll-to-top-button mat-icon {
+  font-size: 28px;
+  color: color(text);
+  text-shadow: 0 0 6px rgba(color(accent), 0.6);
+  transition: all 0.3s ease;
+}
+
+/* =====================================================
+   RESPONSIVE — SCROLL TO TOP
+===================================================== */
+
+/* XL */
+@include up(xl) {
+  .scroll-to-top-button {
+    right: 28px;
+    bottom: 28px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .scroll-to-top-button mat-icon {
+    font-size: 30px;
+  }
+}
+
+/* LG */
+@include between(md, lg) {
+  .scroll-to-top-button {
+    right: 22px;
+    bottom: 22px;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* MD */
+@media (max-width: bp(md)) {
+  .main-content {
+    padding: space(5);
+  }
+
+  .scroll-to-top-button {
+    right: 15px;
+    bottom: 15px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .scroll-to-top-button mat-icon {
+    font-size: 24px;
+  }
+}
+
+/* SM */
+@media (max-width: bp(sm)) {
+  .main-content {
+    padding: space(4);
+  }
+
+  .scroll-to-top-button {
+    right: 12px;
+    bottom: 12px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* XS */
+@media (max-width: bp(xs)) {
+  .main-content {
+    padding: space(3);
+  }
+
+  .scroll-to-top-button {
+    right: 10px;
+    bottom: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .scroll-to-top-button mat-icon {
+    font-size: 22px;
+  }
+}
+

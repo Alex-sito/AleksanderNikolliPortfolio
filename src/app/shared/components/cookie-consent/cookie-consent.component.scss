@@ -1,0 +1,159 @@
+
+/* src/app/shared/components/cookie-consent/cookie-consent.component.scss */
+
+@use '../../../../styles/theme/theme' as *;
+
+.cookie-consent-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: color(dark-bg); // Sfondo scuro
+  color: color(text); // Testo chiaro
+  padding: space(4) space(5);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+  z-index: 2000; // Assicurati che sia sopra tutto
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid rgba(color(accent), 0.3); // Bordo superiore sottile
+
+  .banner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    text-align: center;
+
+    p {
+      margin-bottom: space(4);
+      font-size: 0.95rem;
+      line-height: 1.5;
+
+      a {
+        color: color(accent);
+        text-decoration: underline;
+
+        &:hover {
+          color: lighten(color(accent), 10%);
+        }
+      }
+    }
+
+    .banner-actions {
+      display: flex;
+      gap: space(2);
+
+      button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+
+        &.mat-flat-button.mat-accent {
+          background-color: color(accent);
+          color: color(dark-bg);
+
+          &:hover {
+            background-color: lighten(color(accent), 10%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(color(accent), 0.4);
+          }
+        }
+
+        &.mat-button {
+          color: color(text);
+          border: 1px solid rgba(color(text), 0.5);
+
+          &:hover {
+            background-color: rgba(color(text), 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+    }
+  }
+}
+
+/* =========================================================
+   XS – smartphone piccoli
+========================================================= */
+@media (max-width: bp(xs)) {
+  .cookie-consent-banner {
+    padding: space(2) space(3);
+
+    .banner-content {
+      p {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+/* =========================================================
+   SM – smartphone standard
+========================================================= */
+@media (min-width: bp(xs)) and (max-width: bp(sm)) {
+  .cookie-consent-banner {
+    padding: space(3) space(4);
+
+    .banner-content {
+      p {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+/* =========================================================
+   MD – tablet / mobile landscape
+========================================================= */
+@media (max-width: bp(md)) {
+  .cookie-consent-banner {
+    padding: space(2) space(4);
+
+    .banner-content {
+      p {
+        font-size: 0.85rem;
+        margin-bottom: space(2);
+      }
+
+      .banner-actions {
+        flex-direction: column;
+        width: 100%;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+/* =========================================================
+   LG – desktop piccoli
+========================================================= */
+@include between(md, lg) {
+  .cookie-consent-banner {
+    .banner-content {
+      max-width: 820px;
+    }
+  }
+}
+
+/* =========================================================
+   XL – desktop grandi
+========================================================= */
+@include up(xl) {
+  .cookie-consent-banner {
+    .banner-content {
+      max-width: 1000px;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+

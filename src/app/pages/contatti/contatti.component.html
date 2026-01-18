@@ -1,0 +1,20 @@
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <input type="text" placeholder="Nome" formControlName="nome">
+
+  <input type="email" placeholder="Email" formControlName="email">
+
+  <input type="text" placeholder="Cellulare" formControlName="cellulare">
+
+  <textarea placeholder="Messaggio" formControlName="messaggio"></textarea>
+
+  <button type="submit" [disabled]="loading">
+    {{ loading ? 'Invio...' : 'Invia messaggio' }}
+  </button>
+
+  <p *ngIf="success" class="success">Messaggio inviato ✔</p>
+  <p *ngIf="error" class="error">{{ error }}</p>
+
+</form>
+

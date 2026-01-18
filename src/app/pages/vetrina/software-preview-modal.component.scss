@@ -1,0 +1,178 @@
+
+/* src/app/pages/vetrina/software-preview-modal.component.scss */
+
+/* 
+@use 'theme/theme' as *;
+*/
+/* =====================================================
+   MODAL CONTAINER
+===================================================== 
+.modal-container {
+  background: color(dialog-bg);
+  padding: space(6);
+  border-radius: radius(card);
+  border: border(dialog);
+  box-shadow: shadow(dialog);
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* =====================================================
+   TITOLO & DESCRIZIONE
+===================================================== 
+.modal-title {
+  font-size: 1.8rem;
+  margin-bottom: space(4);
+  color: color(accent);
+}
+
+.modal-description {
+  color: color(text-light);
+  margin-bottom: space(4);
+  line-height: 1.6;
+}
+
+/* =====================================================
+   SLIDESHOW
+===================================================== 
+.slideshow {
+  position: relative;
+
+  .shot {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: space(4);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  }
+
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(color(accent), 0.2);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 2rem;
+    color: color(accent);
+    transition: background 0.25s ease, transform 0.25s ease;
+
+    &:hover {
+      background: rgba(color(accent), 0.35);
+      transform: translateY(-50%) scale(1.1);
+    }
+  }
+
+  .prev { left: 0; }
+  .next { right: 0; }
+}
+
+/* =====================================================
+   AZIONI MODAL
+===================================================== 
+.modal-actions {
+  display: flex;
+  gap: space(4);
+  justify-content: center;
+  margin-top: space(4);
+  flex-wrap: wrap;
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 10px 20px;
+    border-radius: radius(btn);
+    cursor: pointer;
+    border: border(btn);
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+
+  .btn-primary {
+    background: color(accent);
+    color: color(dark-bg);
+
+    &:hover {
+      background: darken(color(accent), 8%);
+      box-shadow: 0 0 15px rgba(color(accent), 0.6);
+      transform: translateY(-2px);
+    }
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: color(accent);
+
+    &:hover {
+      background: rgba(color(accent), 0.15);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== 
+
+/* XL 
+@include up(xl) {
+  .modal-container {
+    max-width: 1000px;
+  }
+}
+
+/* LG 
+@include between(md, lg) {
+  .modal-container {
+    padding: space(5);
+  }
+}
+
+/* MD 
+@media (max-width: bp(md)) {
+  .modal-container {
+    padding: space(4);
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .slideshow .nav {
+    font-size: 1.7rem;
+    padding: 8px;
+  }
+}
+
+/* SM 
+@media (max-width: bp(sm)) {
+  .modal-title {
+    font-size: 1.3rem;
+  }
+
+  .modal-description {
+    font-size: 0.95rem;
+  }
+
+  .modal-actions {
+    gap: space(3);
+
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+    }
+  }
+}
+
+/* XS 
+@media (max-width: bp(xs)) {
+  .modal-container {
+    padding: space(3);
+  }
+
+  .slideshow .nav {
+    font-size: 1.4rem;
+  }
+}
+
+*/

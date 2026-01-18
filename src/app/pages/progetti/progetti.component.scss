@@ -1,0 +1,147 @@
+
+/* src/app/pages/progetti/progetti.component.scss*/
+@use '../../../styles/theme/theme' as *;
+
+
+/* =====================================================
+   SEZIONE PROGETTI — STILE VETRINA
+===================================================== */
+.progetti-section {
+  padding: space(7) space(6);
+  color: color(text);
+}
+
+/* =====================================================
+   CONTENITORE CENTRATO
+===================================================== */
+.progetti-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center; // 🔥 forza centratura testo
+}
+
+/* =====================================================
+   TITOLI (SEMPRE CENTRALI)
+===================================================== */
+.section-title {
+  font-family: $font-family-heading;
+  font-size: 2.3rem;
+  color: color(accent);
+  margin-bottom: space(4);
+  text-align: center;
+  text-shadow: 0 0 12px rgba(color(accent), 0.5);
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  max-width: 720px;
+  margin-left: auto;   // 🔥 centratura reale
+  margin-right: auto;
+  margin-bottom: space(6);
+  color: color(text-light);
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* =====================================================
+   GRID PROGETTI — 2 RIGHE × 2 COLONNE
+===================================================== */
+.projects-grid {
+  display: grid;
+  
+
+  grid-template-columns: repeat(2, 260px); // 🔥 2 colonne fisse
+  grid-auto-rows: auto;                    // righe automatiche
+
+  gap: space(6);
+  justify-content: center;                 // 🔥 griglia centrata
+  align-items: stretch;
+}
+
+/* =====================================================
+   COMING SOON
+===================================================== */
+.coming-soon {
+  margin-top: space(6);
+  font-size: 0.95rem;
+  color: color(text-light);
+  opacity: 0.75;
+  text-align: center;
+}
+
+/* =====================================================
+   RESPONSIVE — XL
+===================================================== */
+@include up(xl) {
+  .progetti-inner {
+    max-width: 1400px;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 280px);
+  }
+}
+
+/* =====================================================
+   RESPONSIVE — LG / MD
+===================================================== */
+@include between(md, lg) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 250px);
+    gap: space(5);
+  }
+}
+
+@media (max-width: bp(md)) {
+  .progetti-section {
+    padding: space(6) space(4);
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 240px);
+    gap: space(4);
+  }
+}
+
+/* =====================================================
+   RESPONSIVE — SM
+===================================================== */
+@media (max-width: bp(sm)) {
+  .section-title {
+    font-size: 1.7rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 220px);
+  }
+}
+
+/* =====================================================
+   RESPONSIVE — XS
+===================================================== */
+@media (max-width: bp(xs)) {
+  .progetti-section {
+    padding: space(5) space(3);
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr; // 🔥 fallback pulito mobile
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .coming-soon {
+    font-size: 0.85rem;
+  }
+}
+
