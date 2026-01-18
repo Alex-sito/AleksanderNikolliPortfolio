@@ -102,6 +102,10 @@ ng g service services/pricing
 
 ng extract-i18n --output-path src/locale
 
+git add .
+git commit -m "update"
+git push
+
 Ogni volta che fai modifiche Angular → devi rifare:
     npm run build:ssr
 Avvia il server SSR in modalità produzione

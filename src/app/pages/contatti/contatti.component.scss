@@ -57,6 +57,7 @@ form.contact-form {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
+  padding: 2rem;
 
   mat-form-field {
     width: 100%;
@@ -246,6 +247,22 @@ form.contact-form {
     h1 {
       font-size: 2.8rem;
     }
+  }
+}
+
+button:focus-visible {
+  outline: 2px solid color(accent);
+  outline-offset: 3px;
+}
+
+.form-wrapper {
+  background: rgba(color(dark-bg), 0.85);
+  backdrop-filter: blur(8px);
+}
+
+@include down(xs) {
+  .contatti-container h1 {
+    line-height: 1.2;
   }
 }
 

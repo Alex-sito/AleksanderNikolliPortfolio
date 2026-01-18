@@ -15,6 +15,11 @@ export class ContattiComponent {
   success = false;
   error = '';
 
+  // 🔹 Testi runtime i18n
+  submitLabel = $localize`:@@contactSubmit:Invia messaggio`;
+  loadingLabel = $localize`:@@contactSending:Invio...`;
+  genericError = $localize`:@@contactError:Errore durante l’invio del messaggio`;
+
   constructor(
     private fb: FormBuilder,
     private contactsService: ContactsService
@@ -29,7 +34,7 @@ export class ContattiComponent {
 
   submit(): void {
     if (this.form.invalid) {
-      this.form.markAllAsTouched(); // 🔴 fa comparire gli errori
+      this.form.markAllAsTouched();
       return;
     }
 
@@ -44,7 +49,7 @@ export class ContattiComponent {
         this.loading = false;
       },
       error: () => {
-        this.error = 'Errore durante l’invio del messaggio';
+        this.error = this.genericError;
         this.loading = false;
       }
     });

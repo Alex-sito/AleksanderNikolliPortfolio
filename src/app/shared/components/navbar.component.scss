@@ -1,241 +1,214 @@
 
-/* src/app/shared/components/navbar/navbar.component.scss */
-
 @use '../../../styles/theme/theme' as *;
 
-// Variabili specifiche della navbar.
-$darkest-bg: #141428;         // Toolbar molto scura
-$brand-link-color: #58a6ff;   // Un blu brillante per il brand (GitHub-like)
-
-.toolbar-custom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: $darkest-bg !important;
-  padding: 0 space(4);
-  font-family: $font-family-base;
-  height: 64px;
-
-  /* ✅ Navbar fissa corretta */
+.toolbar-custom.stacked-navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: z(header);
 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background-color: #141428;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: space(2) space(4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* =====================================================
+   BRAND ROW
+===================================================== */
+
+.brand-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: space(2);
 }
 
 .brand-link {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: $brand-link-color;
+  font-size: 1.8rem;
+  font-family: $font-family-heading;
+  font-weight: 700;
+  color: color(accent);
   text-decoration: none;
-  transition: color 0.3s ease;
-
-  /* RIPRISTINATO: Posizionamento assoluto per centrare il brand */
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3; /* Assicura che sia sopra gli altri link se si sovrappongono */
-  white-space: nowrap; /* Impedisce al testo di andare a capo */
+  text-shadow: 0 0 12px rgba(color(accent), 0.7);
+  white-space: nowrap;
 
   &:hover {
-    color: lighten($brand-link-color, 10%);
+    color: lighten(color(accent), 10%);
   }
 }
 
-/* Contenitori per i link desktop */
-.nav-links-container {
+/* =====================================================
+   NAV ROW
+===================================================== */
+
+.nav-row {
+  width: 100%;
+  max-width: 1200px;
+
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: space(4);
-  align-items: center; /* Allinea verticalmente i link */
-  z-index: 2; /* Assicura che i link siano sotto il brand ma sopra lo sfondo */
-  flex-shrink: 1; /* Permette ai link di restringersi se necessario */
-  flex-basis: auto; /* Permette agli elementi di avere una dimensione basata sul contenuto */
+
+  flex-wrap: nowrap;       /* 🔥 MAI a capo */
+  overflow: hidden;        /* 🔥 NO scrollbar */
+  white-space: nowrap;
 }
 
-/* Regola la posizione delle sezioni sinistra e destra */
-.left-section {
-  order: 1; /* Primo elemento */
-  // Aggiungiamo un margine destro per spingere via il brand se i link sono lunghi
-  margin-right: auto; /* Spinge il brand verso il centro */
+/* LINK NAVIGAZIONE */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: space(3);
+  flex-shrink: 1;
 }
 
-.right-section {
-  order: 3; /* Terzo elemento */
-  // Aggiungiamo un margine sinistro per spingere via il brand se i link sono lunghi
-  margin-left: auto; /* Spinge il brand verso il centro */
-}
-
-.desktop-links a {
+.nav-links a {
   color: color(text);
   text-transform: uppercase;
   font-weight: 500;
-  transition: color 0.3s ease, transform 0.2s ease;
-  padding: 0 12px; /* Padding di default per i link */
-  white-space: nowrap; /* Impedisce ai link di andare a capo */
-  flex-shrink: 1; /* Permette ai link di restringersi */
-  min-width: 0; /* Permette ai link di restringersi oltre il loro contenuto se necessario */
+  font-size: 0.95rem;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
 
   &:hover {
     color: color(accent);
     transform: translateY(-2px);
   }
 
-  &.active { /* Stile per il link attivo */
+  &.active {
     color: color(accent);
     border-bottom: 2px solid color(accent);
-    padding-bottom: 6px; /* Per compensare il bordo */
   }
 }
 
-.menu-button {
-  display: none; /* Nascosto per desktop */
-  color: color(text);
-  order: 4; /* Posiziona il pulsante menu a destra */
-}
+/* =====================================================
+   LANGUAGE BUTTONS — SEMPRE A DESTRA
+===================================================== */
 
-/* Stili per i pulsanti lingua */
 .language-buttons {
   display: flex;
   align-items: center;
-  margin-left: space(4); /* Spazio tra i link e i pulsanti lingua */
-  flex-shrink: 0; /* Impedisce ai pulsanti lingua di restringersi */
+  gap: space(2);
+  margin-left: auto;  /* 🔥 spinge le lingue a destra */
+  flex-shrink: 0;
 
   button {
-    min-width: unset; /* Rimuove il min-width predefinito di mat-button */
-    padding: 4px 8px; /* Padding ridotto per i pulsanti lingua */
-    border-radius: 4px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-    color: color(text); /* Colore del testo per i pulsanti lingua */
+    min-width: unset;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: color(text);
 
-    .flag-icon {
-      width: 24px; /* Dimensione delle immagini bandiera */
-      height: 16px;
-      margin-right: 5px;
-      border-radius: 2px; /* Angoli leggermente arrotondati per le bandiere */
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-    }
-
-    .lang-text {
-      font-size: 0.85rem; /* Dimensione del testo IT/EN */
-      font-weight: 500;
-    }
-
-    &.active-lang {
-      background-color: rgba(color(accent), 0.2); /* Sfondo leggero per la lingua attiva */
-      border: 1px solid color(accent); /* Bordo per evidenziare */
-      color: color(accent); /* Colore del testo per la lingua attiva */
-    }
-
-    &:hover {
-      background-color: rgba(color(accent), 0.1);
-    }
-  }
-}
-
-/* Nascondi i pulsanti lingua mobile su desktop */
-.mobile-lang-buttons {
-  display: none;
-}
-
-/* Media query per dispositivi mobili */
-@media (max-width: bp(md)) { /* Per schermi più piccoli di 768px (smartphone) */
-  .desktop-links {
-    display: none; /* Nasconde i link desktop */
-  }
-
-  .desktop-lang-buttons {
-    display: none; /* Nasconde i pulsanti lingua desktop */
-  }
-
-  .menu-button {
-    display: block; /* Mostra il pulsante menu mobile */
-  }
-
-  .toolbar-custom {
-    justify-content: space-between; /* Distribuisce il brand e il pulsante menu */
-  }
-
-  .brand-link {
-    /* Torna al flusso normale per mobile */
-    position: static; /* Assicura che non ci siano residui di posizionamento assoluto */
-    transform: none;
-    left: auto;
-    order: 2; /* Ri-applica l'ordine per mobile */
-    flex-grow: 1; /* Permette al brand di occupare lo spazio centrale */
-    text-align: center; /* Centra il testo del brand */
-    font-size: 1.5rem; /* Revert to original size for mobile if desired */
-  }
-
-  /* Mostra i pulsanti lingua mobile all'interno del menu */
-  .mobile-lang-buttons {
-    display: flex;
-    flex-direction: column; /* Impila i pulsanti verticalmente */
-    padding: 8px 0;
-    border-top: 1px solid rgba(color(text), 0.1); /* Separatore */
-
-    button {
-      width: 100%; /* I pulsanti occupano tutta la larghezza del menu */
-      justify-content: flex-start; /* Allinea contenuto a sinistra */
-      padding: 8px 16px; /* Padding per i mat-menu-item */
-      border: none; /* Rimuove il bordo per i mat-menu-item */
-      background-color: transparent; /* Sfondo trasparente */
-
-      &:hover {
-        background-color: rgba(color(text), 0.05); /* Sfondo hover leggero */
-      }
-
-      .lang-text {
-        font-size: 1rem; /* Dimensione del testo completo (Italiano/English) */
-      }
-    }
-  }
-}
-
-/* NUOVO: Media query specifica per la fascia 769px - 1024px */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .brand-link {
-    font-size: 1.2rem; /* Riduci la dimensione del font del brand */
-  }
-  .desktop-links {
-    gap: space(1); /* Riduci il gap tra i link */
-  }
-  .desktop-links a {
-    font-size: 0.85rem; /* Riduci la dimensione del font dei link */
-    padding: 0 6px; /* Riduci il padding dei link */
-  }
-  .language-buttons {
-    margin-left: space(1); /* Riduci il margine per i pulsanti lingua */
-  }
-  .language-buttons button {
-    padding: 2px 4px; /* Riduci il padding dei pulsanti lingua */
-    .lang-text {
-      font-size: 0.7rem; /* Riduci la dimensione del testo IT/EN */
-    }
     .flag-icon {
       width: 18px;
       height: 12px;
+      margin-right: 4px;
+      border-radius: 2px;
+    }
+
+    .lang-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    &.active-lang {
+      border: 1px solid color(accent);
+      color: color(accent);
+      background: rgba(color(accent), 0.15);
     }
   }
 }
 
-// Stili per il menu di Angular Material (mat-menu)
-.mat-menu-panel {
-  background-color: lighten(color(dark-bg), 5%);
-  border: 1px solid rgba(color(accent), 0.2);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-}
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
-.mat-menu-item {
-  color: color(text);
-  font-family: $font-family-base;
-  transition: background-color 0.2s ease;
 
-  &:hover {
-    background-color: lighten(lighten(color(dark-bg), 5%), 5%);
-    color: color(accent);
+@include down(lg) {
+  .nav-row {
+    gap: space(3);
+  }
+
+  .nav-links {
+    gap: space(2);
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+    padding: 4px 8px;
+  }
+
+  .language-buttons button {
+    padding: 3px 6px;
+
+    .lang-text {
+      font-size: 0.75rem;
+    }
+
+    .flag-icon {
+      width: 16px;
+      height: 11px;
+    }
   }
 }
+
+@include down(md) {
+  .nav-row {
+    gap: space(2);
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+    padding: 3px 6px;
+  }
+
+  .language-buttons {
+    gap: space(1);
+  }
+
+  .language-buttons button {
+    padding: 2px 4px;
+
+    .lang-text {
+      font-size: 0.7rem;
+    }
+
+    .flag-icon {
+      width: 14px;
+      height: 10px;
+    }
+  }
+}
+
+@include down(sm) {
+  .brand-link {
+    font-size: 1.4rem;
+  }
+
+  .nav-links a {
+    font-size: 0.65rem;
+    padding: 2px 4px;
+  }
+
+  .language-buttons button {
+    padding: 1px 3px;
+
+    .lang-text {
+      font-size: 0.65rem;
+    }
+
+    .flag-icon {
+      width: 12px;
+      height: 9px;
+    }
+  }
+}
+
 

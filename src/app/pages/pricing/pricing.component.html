@@ -8,21 +8,22 @@
   <!-- =====================
        CAMPI DINAMICI
   ====================== -->
-  <ng-container *ngFor="let key of optionKeys">
+  <ng-container *ngFor="let key of optionKeys; trackBy: trackByKey">
 
     <div class="form-group">
 
-      <!-- LABEL + DETTAGLI -->
+      <!-- LABEL + INFO -->
       <div class="label-row">
-        <label i18n>{{ pricingInfo[key].title }}</label>
+        <label [attr.for]="key">
+          {{ pricingInfo[key].title }}
+        </label>
 
         <button
           type="button"
           class="info-btn"
           (click)="toggleInfo(key)"
-          i18n
         >
-          ⓘ Dettagli
+          ⓘ {{ detailsLabel }}
         </button>
       </div>
 
@@ -32,22 +33,25 @@
         <!-- NUMERO PAGINE -->
         <input
           *ngSwitchCase="'pages'"
+          [id]="key"
           type="number"
           min="1"
           formControlName="pages"
         />
 
-        <!-- LINGUE -->
+        <!-- NUMERO LINGUE -->
         <input
           *ngSwitchCase="'languages'"
+          [id]="key"
           type="number"
           min="1"
           formControlName="languages"
         />
 
-        <!-- SELECT GENERICO -->
+        <!-- SELECT GENERICA -->
         <select
           *ngSwitchDefault
+          [id]="key"
           [formControlName]="key"
         >
           <option
@@ -60,14 +64,14 @@
 
       </ng-container>
 
-      <!-- DETTAGLI COLLASSABILI -->
+      <!-- DETTAGLI -->
       <div
         class="info-box"
         *ngIf="openedInfo === key"
       >
         <p>{{ pricingInfo[key].description }}</p>
 
-        <ul *ngIf="pricingInfo[key].notes">
+        <ul *ngIf="pricingInfo[key].notes?.length">
           <li *ngFor="let note of pricingInfo[key].notes">
             {{ note }}
           </li>
@@ -83,9 +87,8 @@
     type="submit"
     class="submit-btn"
     [disabled]="loading || form.invalid"
-    i18n
   >
-    {{ loading ? 'Calcolo in corso…' : 'Calcola preventivo' }}
+    {{ loading ? calculatingLabel : calculateLabel }}
   </button>
 
 </form>
@@ -97,69 +100,65 @@
   class="live-preview"
   *ngIf="previewTotal !== null"
 >
-  <strong i18n>Stima attuale:</strong>
+  <strong>{{ estimateLabel }}</strong>
   €{{ previewTotal }}
 </section>
 
 <!-- =====================
      RISULTATO
 ====================== -->
-<section *ngIf="result" class="pricing-result">
+<section
+  *ngIf="result"
+  class="pricing-result"
+>
 
-  <!-- 🔥 SCONTO -->
+  <!-- SCONTO -->
   <div
     *ngIf="result.discountRate > 0"
     class="discount-banner"
   >
     🔥 -{{ result.discountRate * 100 }}%
     <span>
-      <span i18n>Valido fino al</span>
+      {{ validUntilLabel }}
       {{ result.validUntil | date:'dd/MM/yyyy' }}
     </span>
     <strong>⏳ {{ countdownText }}</strong>
   </div>
 
-  <h2 i18n>
-    Totale scontato: €{{ result.discountedTotal }}
+  <h2>
+    {{ discountedTotalLabel }} €{{ result.discountedTotal }}
   </h2>
 
   <p
     *ngIf="result.discountRate > 0"
     class="old-price"
   >
-    <span i18n>Prezzo originale:</span>
-    €{{ result.total }}
+    {{ originalPriceLabel }} €{{ result.total }}
   </p>
 
-  <!-- =====================
-      RIEPILOGO VOCI
-  ====================== -->
+  <!-- RIEPILOGO -->
   <div class="summary-box">
+    <h3>{{ summaryLabel }}</h3>
 
-    <h3 i18n>Riepilogo del preventivo</h3>
-
-      <ul class="summary-list">
-        <li *ngFor="let key of optionKeys">
-          <span class="label">
-            {{ pricingInfo[key].title }}
-          </span>
-          <span class="value">
-            €{{ result.breakdown[key] || 0 }}
-          </span>
-        </li>
-      </ul>
-
-
+    <ul class="summary-list">
+      <li *ngFor="let key of optionKeys; trackBy: trackByKey">
+        <span class="label">
+          {{ pricingInfo[key].title }}
+        </span>
+        <span class="value">
+          €{{ result.breakdown[key] || 0 }}
+        </span>
+      </li>
+    </ul>
   </div>
 
-
+  <!-- CTA -->
   <button
     type="button"
     class="whatsapp-btn discount"
     (click)="openWhatsapp()"
-    i18n
   >
-    💬 Richiedi ora su WhatsApp
+    💬 {{ whatsappLabel }}
   </button>
 
 </section>

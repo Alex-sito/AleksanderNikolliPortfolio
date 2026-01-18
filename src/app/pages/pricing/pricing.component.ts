@@ -11,8 +11,8 @@ import {
   PricingResponse,
   PricingKey
 } from '../../services/pricing.service';
-import { PRICING_INFO } from '../../models/pricing-options.model';
 
+import { PRICING_INFO } from '../../models/pricing-options.model';
 
 @Component({
   selector: 'app-pricing',
@@ -31,9 +31,7 @@ export class PricingComponent implements OnDestroy {
   private countdownInterval?: number;
 
   pricingInfo = PRICING_INFO;
-  
   openedInfo: string | null = null;
-
 
   optionKeys: PricingKey[] = [
     'pages',
@@ -53,72 +51,83 @@ export class PricingComponent implements OnDestroy {
     'automations'
   ];
 
-  // Opzioni per select
+  // 🔹 Testi runtime i18n
+  calculateLabel = $localize`:@@pricingCalculate:Calcola preventivo`;
+  calculatingLabel = $localize`:@@pricingCalculating:Calcolo in corso…`;
+  detailsLabel = $localize`:@@pricingDetails:Dettagli`;
+  estimateLabel = $localize`:@@pricingEstimate:Stima attuale:`;
+  discountedTotalLabel = $localize`:@@pricingDiscountedTotal:Totale scontato:`;
+  originalPriceLabel = $localize`:@@pricingOriginalPrice:Prezzo originale:`;
+  summaryLabel = $localize`:@@pricingSummary:Riepilogo del preventivo`;
+  whatsappLabel = $localize`:@@pricingWhatsapp:Richiedi ora su WhatsApp`;
+  validUntilLabel = $localize`:@@pricingValidUntil:Valido fino al`;
+
+  // ✅ Opzioni select localizzate
   selectOptions: Record<string, { value: string; label: string }[]> = {
     design: [
-      { value: 'base', label: 'Base' },
-      { value: 'custom', label: 'Personalizzato' },
-      { value: 'advanced', label: 'Avanzato' }
+      { value: 'base', label: $localize`:@@pricingDesignBase:Base` },
+      { value: 'custom', label: $localize`:@@pricingDesignCustom:Personalizzato` },
+      { value: 'advanced', label: $localize`:@@pricingDesignAdvanced:Avanzato` }
     ],
     seo: [
-      { value: 'none', label: 'Nessuna' },
-      { value: 'basic', label: 'Base' },
-      { value: 'advanced', label: 'Avanzata' }
+      { value: 'none', label: $localize`:@@pricingSeoNone:Nessuna` },
+      { value: 'basic', label: $localize`:@@pricingSeoBasic:Base` },
+      { value: 'advanced', label: $localize`:@@pricingSeoAdvanced:Avanzata` }
     ],
     ecommerce: [
-      { value: 'none', label: 'Nessuno' },
-      { value: 'small', label: 'Piccolo' },
-      { value: 'medium', label: 'Medio' },
-      { value: 'advanced', label: 'Avanzato' }
+      { value: 'none', label: $localize`:@@pricingEcoNone:Nessuno` },
+      { value: 'small', label: $localize`:@@pricingEcoSmall:Piccolo` },
+      { value: 'medium', label: $localize`:@@pricingEcoMedium:Medio` },
+      { value: 'advanced', label: $localize`:@@pricingEcoAdvanced:Avanzato` }
     ],
     cms: [
-      { value: 'none', label: 'Nessuno' },
-      { value: 'basic', label: 'Base' },
-      { value: 'advanced', label: 'Avanzato' }
+      { value: 'none', label: $localize`:@@pricingCmsNone:Nessuno` },
+      { value: 'basic', label: $localize`:@@pricingCmsBasic:Base` },
+      { value: 'advanced', label: $localize`:@@pricingCmsAdvanced:Avanzato` }
     ],
     maintenance: [
-      { value: 'none', label: 'Nessuna' },
-      { value: 'monthly', label: 'Mensile' },
-      { value: 'yearly', label: 'Annuale' }
+      { value: 'none', label: $localize`:@@pricingMaintNone:Nessuna` },
+      { value: 'monthly', label: $localize`:@@pricingMaintMonthly:Mensile` },
+      { value: 'yearly', label: $localize`:@@pricingMaintYearly:Annuale` }
     ],
     hosting: [
-      { value: 'client', label: 'Cliente' },
-      { value: 'basic', label: 'Base' },
-      { value: 'full', label: 'Completo' }
+      { value: 'client', label: $localize`:@@pricingHostingClient:Cliente` },
+      { value: 'basic', label: $localize`:@@pricingHostingBasic:Base` },
+      { value: 'full', label: $localize`:@@pricingHostingFull:Completo` }
     ],
     performance: [
-      { value: 'standard', label: 'Standard' },
-      { value: 'optimized', label: 'Ottimizzata' },
-      { value: 'advanced', label: 'Avanzata' }
+      { value: 'standard', label: $localize`:@@pricingPerfStandard:Standard` },
+      { value: 'optimized', label: $localize`:@@pricingPerfOptimized:Ottimizzata` },
+      { value: 'advanced', label: $localize`:@@pricingPerfAdvanced:Avanzata` }
     ],
     security: [
-      { value: 'base', label: 'Base' },
-      { value: 'advanced', label: 'Avanzata' }
+      { value: 'base', label: $localize`:@@pricingSecBase:Base` },
+      { value: 'advanced', label: $localize`:@@pricingSecAdvanced:Avanzata` }
     ],
     gdpr: [
-      { value: 'client', label: 'Gestione cliente' },
-      { value: 'basic', label: 'Base' },
-      { value: 'complete', label: 'Completa' }
+      { value: 'client', label: $localize`:@@pricingGdprClient:Gestione cliente` },
+      { value: 'basic', label: $localize`:@@pricingGdprBasic:Base` },
+      { value: 'complete', label: $localize`:@@pricingGdprComplete:Completa` }
     ],
     marketing: [
-      { value: 'none', label: 'Nessuno' },
-      { value: 'basic', label: 'Base' },
-      { value: 'advanced', label: 'Avanzato' }
+      { value: 'none', label: $localize`:@@pricingMarketingNone:Nessuno` },
+      { value: 'basic', label: $localize`:@@pricingMarketingBasic:Base` },
+      { value: 'advanced', label: $localize`:@@pricingMarketingAdvanced:Avanzato` }
     ],
     content: [
-      { value: 'client', label: 'Forniti dal cliente' },
-      { value: 'basic', label: 'Base' },
-      { value: 'seo', label: 'Ottimizzati SEO' }
+      { value: 'client', label: $localize`:@@pricingContentClient:Forniti dal cliente` },
+      { value: 'basic', label: $localize`:@@pricingContentBasic:Base` },
+      { value: 'seo', label: $localize`:@@pricingContentSeo:Ottimizzati SEO` }
     ],
     media: [
-      { value: 'client', label: 'Forniti dal cliente' },
-      { value: 'stock', label: 'Stock' },
-      { value: 'shooting', label: 'Shooting fotografico' }
+      { value: 'client', label: $localize`:@@pricingMediaClient:Forniti dal cliente` },
+      { value: 'stock', label: $localize`:@@pricingMediaStock:Stock` },
+      { value: 'shooting', label: $localize`:@@pricingMediaShooting:Shooting fotografico` }
     ],
     automations: [
-      { value: 'none', label: 'Nessuna' },
-      { value: 'forms', label: 'Form avanzati' },
-      { value: 'advanced', label: 'Automazioni avanzate' }
+      { value: 'none', label: $localize`:@@pricingAutoNone:Nessuna` },
+      { value: 'forms', label: $localize`:@@pricingAutoForms:Form avanzati` },
+      { value: 'advanced', label: $localize`:@@pricingAutoAdvanced:Automazioni avanzate` }
     ]
   };
 
@@ -128,16 +137,12 @@ export class PricingComponent implements OnDestroy {
   ) {
     this.buildForm();
 
-    // 🔥 PREVIEW PREZZO LIVE
     this.form.valueChanges
       .pipe(debounceTime(500))
       .subscribe(value => {
         if (this.form.valid) {
-          this.pricingService
-            .calculate(value as PricingRequest)
-            .subscribe(res => {
-              this.previewTotal = res.discountedTotal;
-            });
+          this.pricingService.calculate(value as PricingRequest)
+            .subscribe(res => this.previewTotal = res.discountedTotal);
         }
       });
   }
@@ -145,7 +150,7 @@ export class PricingComponent implements OnDestroy {
   private buildForm(): void {
     this.form = this.fb.group({
       pages: [3, [Validators.required, Validators.min(1)]],
-      designLevel: ['base', Validators.required],
+      design: ['base', Validators.required],
       seo: ['none', Validators.required],
       ecommerce: ['none', Validators.required],
       languages: [1, [Validators.required, Validators.min(1)]],
@@ -172,17 +177,14 @@ export class PricingComponent implements OnDestroy {
     this.loading = true;
     this.result = null;
 
-    const payload = this.form.value as PricingRequest;
-
-    this.pricingService.calculate(payload).subscribe({
-      next: (res: PricingResponse) => {
-        this.result = res;
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-      }
-    });
+    this.pricingService.calculate(this.form.value as PricingRequest)
+      .subscribe({
+        next: res => {
+          this.result = res;
+          this.loading = false;
+        },
+        error: () => this.loading = false
+      });
   }
 
   openWhatsapp(): void {
@@ -196,5 +198,10 @@ export class PricingComponent implements OnDestroy {
       clearInterval(this.countdownInterval);
     }
   }
+
+  trackByKey(_: number, key: PricingKey): PricingKey {
+    return key;
+  }
+
 }
 
