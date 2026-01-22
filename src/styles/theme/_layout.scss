@@ -1,0 +1,11 @@
+
+/* ===============================
+   LAYOUT VARIABLES
+=============================== */
+
+/* Altezza navbar desktop */
+$navbar-height-desktop: clamp(100px, 10vh, 140px);
+
+/* Altezza navbar mobile (sotto sm) */
+$navbar-height-mobile: clamp(150px, 18vh, 220px);
+

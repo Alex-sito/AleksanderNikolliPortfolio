@@ -1,6 +1,13 @@
 
 // src/app/shared/components/why-chose-me.component.ts
-import { Component, AfterViewInit, ElementRef } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ElementRef,
+  Inject,
+  PLATFORM_ID
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-why-chose-me',
@@ -9,32 +16,58 @@ import { Component, AfterViewInit, ElementRef } from '@angular/core';
 })
 export class WhyChoseMeComponent implements AfterViewInit {
 
-  constructor(private el: ElementRef) {}
+  constructor(
+    private el: ElementRef,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngAfterViewInit(): void {
+
+    // 🚫 SSR: niente animazioni lato server
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const host: HTMLElement = this.el.nativeElement;
-    const title: HTMLElement | null = host.querySelector('.typing-title');
+    const card = host.querySelector('.why-choose-me-card') as HTMLElement;
+    const title = host.querySelector('.typing-title') as HTMLElement;
 
-    /* --- FIX ANIMAZIONE FADE UP SSR --- */
-    // parte SOLO lato client
-    setTimeout(() => {
-      host.querySelector('.why-choose-me-card')?.classList.add('animate');
-    }, 50);
+    if (!card || !title) return;
 
-    /* --- EFFETTO TYPING --- */
-    if (!title) return;
-
+    // stato iniziale
     title.classList.remove('start-typing', 'typing-done');
 
-    setTimeout(() => {
-      title.classList.add('start-typing');
-    }, 150);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
 
-    title.addEventListener('animationend', (event: AnimationEvent) => {
-      if (event.animationName === 'typing') {
-        title.classList.add('typing-done');
+        /* 🔥 FADE-UP */
+        card.classList.add('animate');
+
+        /* 🔥 TYPING */
+        setTimeout(() => {
+          title.classList.add('start-typing');
+        }, 150);
+
+        title.addEventListener(
+          'animationend',
+          (event: AnimationEvent) => {
+            if (event.animationName === 'typing') {
+              title.classList.add('typing-done');
+            }
+          },
+          { once: true }
+        );
+
+        observer.disconnect(); // 🎯 una sola volta
+      },
+      {
+        threshold: 0.35, // 35% visibile → perfetto UX
+        rootMargin: '0px 0px -80px 0px'
       }
-    }, { once: true });
+    );
+
+    observer.observe(card);
   }
 }
 

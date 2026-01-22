@@ -49,7 +49,11 @@ html, body {
 /* Stili per il contenuto principale */
 .main-content {
   flex-grow: 1; /* Fa sì che il contenuto principale si espanda per occupare lo spazio disponibile */
-  padding-top: 64px; /* Spazio per la navbar fissa, aggiusta se la tua navbar ha un'altezza diversa */
+  padding-top: $navbar-height-desktop;
+
+  @include down(sm) {
+    padding-top: $navbar-height-mobile;
+  }
 }
 
 /* Stili per il footer */
