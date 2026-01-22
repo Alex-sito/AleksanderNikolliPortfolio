@@ -30,11 +30,12 @@
       <!-- INPUT -->
       <ng-container [ngSwitch]="key">
 
-        <!-- NUMERO PAGINE -->
+        <!-- NUMERO PAGINE (OBBLIGATORIO) -->
         <input
           *ngSwitchCase="'pages'"
           [id]="key"
           type="number"
+          inputmode="numeric"
           min="1"
           formControlName="pages"
         />
@@ -44,6 +45,7 @@
           *ngSwitchCase="'languages'"
           [id]="key"
           type="number"
+          inputmode="numeric"
           min="1"
           formControlName="languages"
         />
@@ -52,7 +54,7 @@
         <select
           *ngSwitchDefault
           [id]="key"
-          [formControlName]="key"
+          [formControlName]="key === 'design' ? 'designLevel' : key"
         >
           <option
             *ngFor="let opt of selectOptions[key]"
@@ -88,8 +90,21 @@
     class="submit-btn"
     [disabled]="loading || form.invalid"
   >
-    {{ loading ? calculatingLabel : calculateLabel }}
+
+    <!-- SPINNER -->
+    <span
+      class="spinner"
+      *ngIf="loading"
+      aria-hidden="true"
+    ></span>
+
+    <!-- TESTO -->
+    <span class="btn-text">
+      {{ submitLabel }}
+    </span>
+
   </button>
+
 
 </form>
 

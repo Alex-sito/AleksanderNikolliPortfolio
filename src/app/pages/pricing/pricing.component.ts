@@ -147,23 +147,25 @@ export class PricingComponent implements OnDestroy {
       });
   }
 
+
   private buildForm(): void {
     this.form = this.fb.group({
-      pages: [3, [Validators.required, Validators.min(1)]],
-      design: ['base', Validators.required],
-      seo: ['none', Validators.required],
-      ecommerce: ['none', Validators.required],
-      languages: [1, [Validators.required, Validators.min(1)]],
-      cms: ['none', Validators.required],
-      maintenance: ['none', Validators.required],
-      hosting: ['client', Validators.required],
-      performance: ['standard', Validators.required],
-      security: ['base', Validators.required],
-      gdpr: ['client', Validators.required],
-      marketing: ['none', Validators.required],
-      content: ['client', Validators.required],
-      media: ['client', Validators.required],
-      automations: ['none', Validators.required]
+      pages: [1, [Validators.required, Validators.min(1)]],
+
+      designLevel: ['base'],
+      seo: ['none'],
+      ecommerce: ['none'],
+      languages: [1],
+      cms: ['none'],
+      maintenance: ['none'],
+      hosting: ['client'],
+      performance: ['standard'],
+      security: ['base'],
+      gdpr: ['client'],
+      marketing: ['none'],
+      content: ['client'],
+      media: ['client'],
+      automations: ['none']
     });
   }
 
@@ -202,6 +204,23 @@ export class PricingComponent implements OnDestroy {
   trackByKey(_: number, key: PricingKey): PricingKey {
     return key;
   }
+
+  get submitLabel(): string {
+    if (this.loading) {
+      return $localize`:@@pricingCalculating:Calcolo in corso…`;
+    }
+
+    if (this.result) {
+      return $localize`:@@pricingRecalculate:Ricalcola preventivo`;
+    }
+
+    if (this.previewTotal !== null) {
+      return $localize`:@@pricingUpdateEstimate:Aggiorna stima`;
+    }
+
+    return $localize`:@@pricingCalculate:Calcola preventivo`;
+  }
+
 
 }
 

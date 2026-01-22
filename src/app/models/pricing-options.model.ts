@@ -13,9 +13,9 @@ export const PRICING_INFO: Record<string, PricingOptionInfo> = {
     description:
       'Definisce la dimensione e la complessità del sito.',
     notes: [
-      '1–3 pagine: landing page',
-      '4–6 pagine: sito aziendale',
-      '7–10 pagine: struttura completa',
+      '1-3 pagine: landing page',
+      '4-6 pagine: sito aziendale',
+      '7-10 pagine: struttura completa',
       'Oltre 10: costo aggiuntivo per pagina'
     ]
   },
@@ -47,7 +47,7 @@ export const PRICING_INFO: Record<string, PricingOptionInfo> = {
       'Vendita online con gestione prodotti, ordini e pagamenti.',
     notes: [
       'Piccolo: fino a 10 prodotti',
-      'Medio: 10–50 prodotti',
+      'Medio: 10-50 prodotti',
       'Avanzato: cataloghi complessi'
     ]
   },
